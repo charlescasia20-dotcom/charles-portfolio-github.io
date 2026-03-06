@@ -1,0 +1,129 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Drone Shots | Charles Casia</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#020617;
+color:white;
+margin:0;
+}
+
+/* HEADER */
+
+header{
+text-align:center;
+padding:40px;
+background:linear-gradient(120deg,#38bdf8,#020617);
+}
+
+header h1{
+font-size:38px;
+margin-bottom:10px;
+}
+
+header p{
+color:#cbd5f5;
+}
+
+/* GALLERY */
+
+.gallery{
+max-width:900px;
+margin:auto;
+padding:40px;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
+}
+
+.photo{
+background:#020617;
+border-radius:15px;
+overflow:hidden;
+box-shadow:0 10px 25px rgba(0,0,0,0.6);
+transition:.3s;
+}
+
+.photo:hover{
+transform:scale(1.05);
+}
+
+.photo img{
+width:100%;
+height:230px;
+object-fit:cover;
+}
+
+.caption{
+padding:10px;
+text-align:center;
+font-size:14px;
+color:#94a3b8;
+}
+
+/* BACK BUTTON */
+
+.back{
+display:block;
+width:200px;
+margin:30px auto;
+text-align:center;
+padding:12px;
+border-radius:30px;
+background:#38bdf8;
+color:black;
+text-decoration:none;
+font-weight:bold;
+}
+
+footer{
+text-align:center;
+padding:20px;
+color:#94a3b8;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>My Drone Shots&Camera shots</h1>
+<p>Aerial Photography&Camera shots by Charles Casia</p>
+</header>
+
+<section class="gallery">
+
+<div class="photo">
+<img src="5.jpg">
+<div class="caption">MY drone</div>
+</div>
+
+<div class="photo">
+<img src="3.jpg">
+<div class="caption">Camera </div>
+</div>
+
+<div class="photo">
+<img src="8.jpg">
+<div class="caption">Drone Shot </div>
+</div>
+
+</section>
+
+
+
+<footer>
+© 2026 Charles Casia | Drone Pilot
+</footer>
+
+</body>
+</html>
+```

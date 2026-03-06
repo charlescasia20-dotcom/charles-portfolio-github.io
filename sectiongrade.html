@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Registration</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: left;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .form-card {
+            background: white;
+            padding: 30px;
+            border-radius: 17px;
+            box-shadow: 0 9px 15px rgba(0,0,0,0.1);
+            width: 380px;
+        }
+
+        h2 { text-align: center; color: #333; margin-bottom: 20px; font-size: 22px; }
+
+        .field { margin-bottom: 15px; }
+
+        label { display: block; font-size: 13px; margin-bottom: 5px; color: #666; font-weight: bold; }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+
+        input:focus { border-color: #aa3030; outline: none; }
+
+        .pass-wrapper { position: relative; display: flex; align-items: center; }
+
+        .toggle-btn {
+            position: relative;
+            right: 10px;
+            cursor: pointer;
+            font-size: 18px;
+            user-select: none;
+            opacity: 0.6;
+        }
+
+        /* Error Message Style */
+        .error-msg {
+            background-color: #fce4e4;
+            color: #cc0000;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 13px;
+            text-align: left;
+            display: none;
+            margin-bottom: 15px;
+            border: 1px solid #f5c2c2;
+        }
+
+        /* Success Toast */
+        #toast {
+            visibility: hidden;
+            min-width: 200px;
+            background-color: #28a745;
+            color: white;
+            text-align: left;
+            border-radius: 8px;
+            padding: 16px;
+            position: fixed;
+            z-index: 1;
+            top: 30px;
+            font-size: 20px;
+            box-shadow: 0 4px 10px rgba(115, 103, 136, 0.2);
+        }
+
+        #toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
+
+        @keyframes fadein { from {top: 0; opacity: 0;} to {top: 30px; opacity: 1;} }
+        @keyframes fadeout { from {top: 30px; opacity: 1;} to {top: 0; opacity: 0;} }
+
+        button.save-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #e20fad;
+            color: rgb(234, 250, 12);
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 15px;
+            font-size: 15px;
+        }
+
+        button.save-btn:hover { background-color: #0056b3; }
+    </style>
+</head>
+<body>
+
+<div id="toast">✅ payts bai okay na!</div>
+
+<div class="form-card">
+    <h2>Student Registration</h2>
+    
+    <div id="errorBox" class="error-msg">Mali bai! Wala nagka pariha ang password.</div>
+    
+    <div class="field">
+        <label>Firstname</label>
+        <input type="text" id="fname" placeholder="Charles">
+    </div>
+    
+    <div class="field">
+        <label>Middle & Last Name</label>
+        <div style="display: flex; gap: 8px;">
+            <input type="text" id="mname" placeholder="S.">
+            <input type="text" id="lname" placeholder="Casia">
+        </div>
+    </div>
+
+    <div class="field" style="display: flex; gap: 8px;">
+        <div style="flex: 1;">
+            <label>Grade Level</label>
+            <select id="grade" onchange="loadSections()">
+                <option value="">Select</option>
+                <option value="11">Grade 11</option>
+                <option value="12">Grade 12</option>
+            </select>
+        </div>
+        <div style="flex: 1;">
+            <label>Section</label>
+            <select id="section">
+                <option value="">Select</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="field">
+        <label>Username</label>
+        <input type="text" id="uname">
+    </div>
+
+    <div class="field">
+        <label>Password</label>
+        <div class="pass-wrapper">
+            <input type="password" id="p1">
+            <span class="toggle-btn" onclick="togglePass('p1')">👁️</span>
+        </div>
+    </div>
+
+    <div class="field">
+        <label>Confirm Password</label>
+        <div class="pass-wrapper">
+            <input type="password" id="p2">
+            <span class="toggle-btn" onclick="togglePass('p2')">👁️</span>
+        </div>
+    </div>
+
+    <button class="save-btn" onclick="saveData()">SAVE DATA</button>
+</div>
+
+<script>
+    const sections = {
+        "11": ["STEM-A", "HUMSS-A", "ABM-A"],
+        "12": ["STEM-B", "HUMSS-B", "ABM-B"]
+    };
+
+    function loadSections() {
+        const g = document.getElementById("grade").value;
+        const s = document.getElementById("section");
+        s.innerHTML = '<option value="">Select</option>';
+        if(g) {
+            sections[g].forEach(sec => {
+                let opt = document.createElement("option");
+                opt.value = sec; opt.text = sec;
+                s.add(opt);
+            });
+        }
+    }
+
+    function togglePass(id) {
+        const input = document.getElementById(id);
+        input.type = input.type === "password" ? "text" : "password";
+    }
+
+    function saveData() {
+        const p1 = document.getElementById("p1").value;
+        const p2 = document.getElementById("p2").value;
+        const err = document.getElementById("errorBox");
+        const toast = document.getElementById("toast");
+
+        // Check if passwords match
+        if (p1 !== p2 || p1 === "") {
+            err.style.display = "block"; // Pakita ang "Incorrect"
+            return;
+        } else {
+            err.style.display = "none";
+        }
+
+        // Simplementeng Validation para sa uban fields
+        if(document.getElementById("fname").value === "") {
+            alert("Palihog butangi og pangalan.");
+            return;
+        }
+
+        // I-save ang data
+        const data = {
+            fname: document.getElementById("fname").value,
+            mname: document.getElementById("mname").value,
+            lname: document.getElementById("lname").value,
+            grade: document.getElementById("grade").value,
+            section: document.getElementById("section").value,
+            uname: document.getElementById("uname").value
+        };
+        localStorage.setItem("userProfile", JSON.stringify(data));
+
+        // I-pakita ang Success Toast
+        toast.className = "show";
+
+        // Huwat og 3 seconds ayha mo-balhin sa pikas page
+        setTimeout(function(){ 
+            window.location.href = "display2.html"; 
+        }, 3000);
+    }
+
+    
+
+</script>
+
+</body>
+</html> 

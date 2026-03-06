@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Data Display</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .display-card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            width: 350px;
+        }
+        h2 { text-align: center; color: #28a745; margin-bottom: 20px; }
+        .info {
+            border-bottom: 1px solid #eee;
+            padding: 10px 0;
+            display: flex;
+            justify-content: space-between;
+        }
+        .label { font-weight: bold; color: #666; font-size: 14px; }
+        .value { color: #333; font-size: 14px; }
+        .back-btn {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #007bff;
+            font-weight: bold;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="display-card">
+    <h2>Student Profile</h2>
+    <div id="output">
+        </div>
+    <a href="sectiongrade.html" class="back-btn">← Register Again</a>
+</div>
+
+<script>
+    // 1. Kuhaon nato ang data gikan sa localStorage
+    const savedData = localStorage.getItem("userProfile");
+
+    if (savedData) {
+        // 2. I-convert ang "string" balik sa "object"
+        const data = JSON.parse(savedData);
+
+        // 3. I-display sa screen
+        document.getElementById("output").innerHTML = `
+            <div class="info"><span class="label">First Name:</span> <span class="value">${data.fname}</span></div>
+            <div class="info"><span class="label">Middle Name:</span> <span class="value">${data.mname || 'N/A'}</span></div>
+            <div class="info"><span class="label">Last Name:</span> <span class="value">${data.lname}</span></div>
+            <div class="info"><span class="label">Grade Level:</span> <span class="value">${data.grade}</span></div>
+            <div class="info"><span class="label">Section:</span> <span class="value">${data.section}</span></div>
+            <div class="info"><span class="label">Username:</span> <span class="value">${data.uname}</span></div>
+        `;
+    } else {
+        document.getElementById("output").innerHTML = "<p style='text-align:center;'>No data found!</p>";
+    }
+</script>
+
+</body>
+</html>
